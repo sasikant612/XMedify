@@ -2,7 +2,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import heroImage from "../assets/hero_image.png";
 import SearchBar from "../components/SearchBar/SearchBar";
-import HeroSlider from "../components/HeroSlider/Heroslider";
+import HeroSlider from "../components/HeroSlider/HeroSlider";
 
 // Importing images
 import doctorImg from "../assets/Doctor.jpg";

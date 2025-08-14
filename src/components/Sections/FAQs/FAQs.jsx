@@ -1,56 +1,59 @@
-import { Box, Container, Grid, Typography } from "@mui/material";
-import faqBanner from '../../../assets/faqs-banner.jpg'
-import CustomizedAccordions from "../../Accordion/Accordion";
+import React, { useState } from "react";
+import { FaPlus, FaMinus } from "react-icons/fa";
+import bannerImage from "../../../assets/faqs-banner.jpg";
 
-export default function FAQs() {
 
-    const faqs = [
-        {
-            question: 'Why choose our medical for your family?',
-            answer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.'
-        },
-        {
-            question: 'Why we are different from others?',
-            answer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.'
-        },
-        {
-            question: 'Trusted & experience senior care & love',
-            answer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.'
-        },
-        {
-            question: 'How to get appointment for emergency cases?',
-            answer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.'
-        }
-    ]
+const faqsData = [
+  { id: 1, question: "Why choose our medical for your family?" },
+  { id: 2, question: "Why we are different from others?" },
+  { id: 3, question: "Trusted & experienced senior care & love" },
+  { id: 4, question: "How to get appointment for emergency cases" },
+];
 
-    return (
-        <Box py={4}>
-            <Container maxWidth='xl'>
-                <Typography color='primary.main' fontWeight={600} textAlign='center'>
-                    Get Your Answer
-                </Typography>
-                <Typography textAlign='center' variant='h2' mb={2}>
-                    Frequently Asked Questions
-                </Typography>
-                <Grid container alignItems='center' spacing={5}>
+const FAQs = () => {
+  const [openIndex, setOpenIndex] = useState(null);
 
-                    <Grid item xs={12} md={6}>
-                        <Box
-                            src={faqBanner}
-                            component='img'
-                            width={1}
-                            height='auto'
-                        />
-                    </Grid>
+  const toggleFAQ = (index) => {
+    setOpenIndex(index === openIndex ? null : index);
+  };
 
-                    <Grid item xs={12} md={6}>
-                        <Box maxWidth={450}>
-                            <CustomizedAccordions data={faqs} />
-                        </Box>
-                    </Grid>
+  return (
+    <div className="container bg-white my-5 p-4 shadow">
+      <div className="row">
+        {/* Left side image */}
+        <div className="col-md-6 d-flex align-items-center justify-content-center">
+          <img src={bannerImage} alt="FAQs Banner" className="img-fluid" />
 
-                </Grid>
-            </Container>
-        </Box>
-    )
-}
+        </div>
+
+        {/* Right side FAQs */}
+        <div className="col-md-6">
+          <h3 className="mb-4">Frequently Asked Questions</h3>
+          <div className="accordion" id="faqAccordion">
+            {faqsData.map((faq, index) => (
+              <div className="card mb-2 border-0" key={faq.id} style={{padding:"0.3em"}}>
+                <div
+                  className="card-header bg-light d-flex justify-content-between align-items-center"
+                  onClick={() => toggleFAQ(index)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <span>{faq.question}</span>
+                  <span>
+                    {openIndex === index ? <FaMinus /> : <FaPlus />}
+                  </span>
+                </div>
+                {openIndex === index && (
+                  <div className="card-body">
+                    <p>This is a sample answer to the FAQ question.</p>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default FAQs;

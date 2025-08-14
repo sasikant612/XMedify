@@ -1,90 +1,60 @@
-import {
-  Box,
-  Container,
-  Button,
-  List,
-  ListItem,
-  Stack,
-  Typography,
-  useMediaQuery,
-  IconButton,
-} from "@mui/material";
+import React from "react";
 import { Link } from "react-router-dom";
-import logo from "../../assets/logo.png";
 import styles from "./NavBar.module.css";
-import { useState } from "react";
-import CloseIcon from "@mui/icons-material/Close";
-import MenuIcon from "@mui/icons-material/Menu";
+import logo from '../../assets/logo.jpg';
 
-export default function NavBar() {
-  const isMobile = useMediaQuery("(max-width:900px)");
-  const [menuOpen, setMenuOpen] = useState(false);
+const Navbar = () => (
+  <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <div className="container">
+      <Link className="navbar-brand" to="/">
+        <img src={logo} alt="logo" className={styles.logo} width="100" height="100" />
+      </Link>
 
-  return (
-    <header>
-      <Box p={1} bgcolor="primary.main">
-        <Typography fontSize={14} textAlign="center" color="#fff">
-          The health and well-being of our patients and their health care team
-          will always be our priority, so we follow the best practices for
-          cleanliness.
-        </Typography>
-      </Box>
+      {/* Toggle button for mobile view */}
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span className="navbar-toggler-icon"></span>
+      </button>
 
-      <Container maxWidth="xl">
-        <Stack
-          direction="row"
-          spacing={2}
-          alignItems="center"
-          justifyContent="space-between"
-          py={2}
-        >
-          <Link to="/">
-            <img src={logo} alt="Logo" height={27} />
-          </Link>
-
-          <Stack
-            direction={{ xs: "column", md: "row" }}
-            spacing={4}
-            alignItems={{ xs: "flex-start", md: "center" }}
-            className={[styles.navlinks, menuOpen && styles.active]}
-            pt={{ xs: 12, md: 1 }}
-            pb={{ xs: 4, md: 1 }}
-            px={{ xs: 4, md: 0 }}
-          >
-            <Link>Find Doctors</Link>
-            <Link to="/search">Hospitals</Link>
-            <Link>Medicines</Link>
-            <Link>Surgeries</Link>
-            <Link>Software for Provider</Link>
-            <Link>Facilities</Link>
-            <Link to="/my-bookings">
-              <Button variant="contained" disableElevation>
-                My Bookings
-              </Button>
+      {/* Collapsible nav links */}
+      <div className="collapse navbar-collapse" id="navbarNav">
+        <ul className="navbar-nav ms-auto">
+          <li className="nav-item">
+            <Link className="nav-link" to="/">Find Doctors</Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/">Hospitals</Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/">Medicines</Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/">Surgeries</Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/">Software for provider</Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/">Facilities</Link>
+          </li>
+         <Link
+            className="btn text-white ms-2"
+            to="/my-bookings"
+            style={{ backgroundColor: "#2AA8FF" }}
+            >
+            My Bookings
             </Link>
+        </ul>
+      </div>
+    </div>
+  </nav>
+);
 
-            {isMobile && (
-              <IconButton
-                onClick={() => setMenuOpen(false)}
-                sx={{
-                  position: "absolute",
-                  top: 0,
-                  right: 32,
-                  color: "#fff",
-                }}
-              >
-                <CloseIcon />
-              </IconButton>
-            )}
-          </Stack>
-
-          {isMobile && (
-            <IconButton onClick={() => setMenuOpen(true)}>
-              <MenuIcon />
-            </IconButton>
-          )}
-        </Stack>
-      </Container>
-    </header>
-  );
-}
+export default Navbar;

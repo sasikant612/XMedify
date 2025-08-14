@@ -1,13 +1,16 @@
-import { Link, Stack } from "@mui/material";
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+// src/Components/Footer/FooterLink.jsx
+import React from "react";
 
-export default function FooterLink({ children }) {
-    return (
-        <Link underline="none" color='#fff' fontWeight={300} fontSize={14}>
-            <Stack direction='row' gap={0.5}>
-                <KeyboardArrowRightIcon />
-                {children}
-            </Stack>
-        </Link>
-    )
-}
+const FooterLink = ({ links = [] }) => {
+  return (
+    <ul className="list-unstyled">
+      {links.map((text, index) => (
+        <li key={index} className="mb-2">
+          <span className="me-2">›</span>{text}
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+export default FooterLink;

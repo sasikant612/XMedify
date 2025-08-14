@@ -1,85 +1,82 @@
-import mobile from "../../../assets/mobile.jpg";
-import playstore from "../../../assets/playstore.png";
-import apple from "../../../assets/apple-logo.png";
-import arrow from "../../../assets/down-arr.png";
-import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
+import React from "react";
 import SmsForm from "./SmsForm";
 
-//download app component to render input details using SmsForm component
-export default function DownloadApp() {
+// Assets
+import mobileImage from "../../../assets/mobile.jpg";
+import downArrow from "../../../assets/down-arr.jpg";
+import googlePlay from "../../../assets/playstore.jpg";
+import appStore from "../../../assets/apple_store.png";
+
+const DownloadApp = () => {
   return (
-    <Box
-      sx={{ background: "linear-gradient(#E7F0FF 100%, #E8F1FF 47%)", pt: 5 }}
-    >
-      <Container>
-        <Grid container spacing={3} alignItems="center">
-          <Grid item xs={12} md={5.5}>
-            <Box src={mobile} component="img" width={1} height="auto" />
-          </Grid>
+    <div className="bg-light py-5" style={{
+          background: "linear-gradient(135deg, #E7F0FF, #E8F1FF78)",
+        }}>
+      <div className="container">
+        <div className="row align-items-center">
 
-          <Grid item xs={12} md={6.5}>
-            <Box
-              position="relative"
-              pl={{ xs: "36px", md: "50px" }}
-              mb={{ xs: 4, md: 0 }}
-            >
-              <Typography variant="h2" mb={2}>
-                Download the
-                <br />
-                <Box component="span" color="primary.main">
-                  Medify{" "}
-                </Box>
-                App
-              </Typography>
+          {/* Left Column: Mobile Image */}
+          <div className="col-md-6 text-center mb-4 mb-md-0">
+            <img
+              src={mobileImage}
+              alt="Medify Mobile App"
+              className="img-fluid"
+              style={{ maxWidth: "600px" }}
+            />
+             <img
+              src={downArrow}
+              alt="Down Arrow"
+              className="mb-4"
+              style={{ width: "36px", height: "36px" }}
+            />
+          </div>
 
-              <Box
-                src={arrow}
-                component="img"
-                width={{ xs: 24, md: 40 }}
-                position="absolute"
-                left={0}
-                top={50}
-              />
+          {/* Right Column: Text, Form, Store Links */}
+          <div className="col-md-6">
+            <h2 className="h4 fw-bold mb-2">Download the Medify App</h2>
+            <p className="text-muted mb-3">
+              Get the link to download the app via SMS
+            </p>
 
-              <SmsForm />
+           
 
-              <Stack
-                direction={{ xs: "column", md: "row" }}
-                spacing={{ xs: 1, md: 2 }}
+            {/* SMS Form */}
+            <SmsForm />
+
+            {/* App Store Buttons */}
+            <div className="d-flex gap-3 mt-4">
+              <a
+                href="https://play.google.com/"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <Button
-                  sx={{
-                    bgcolor: "#333",
-                    color: "#fff",
-                    py: 1.5,
-                    borderRadius: 1.5,
-                  }}
-                  size={"large"}
-                  startIcon={<img src={playstore} height={24} />}
-                  variant="contained"
-                  disableElevation
-                >
-                  Google Play
-                </Button>
-                <Button
-                  sx={{
-                    bgcolor: "#333",
-                    color: "#fff",
-                    py: 1.5,
-                    borderRadius: 1.5,
-                  }}
-                  size="large"
-                  startIcon={<img src={apple} height={24} />}
-                  variant="contained"
-                  disableElevation
-                >
-                  App Store
-                </Button>
-              </Stack>
-            </Box>
-          </Grid>
-        </Grid>
-      </Container>
-    </Box>
+                <img
+                  src={googlePlay}
+                  alt="Download on Google Play"
+                  className="img-fluid"
+                  style={{ maxWidth: "130px" }}
+                />
+              </a>
+
+              <a
+                href="https://www.apple.com/app-store/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  src={appStore}
+                  alt="Download on the App Store"
+                  className="img-fluid"
+                  style={{ maxWidth: "130px" }}
+                />
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
   );
-}
+};
+
+export default DownloadApp;

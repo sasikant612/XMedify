@@ -1,82 +1,54 @@
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  Link,
-  Stack,
-  Typography,
-} from "@mui/material";
-import logo from "../../assets/logo.png";
-import fb from "../../assets/fb.png";
-import pinterest from "../../assets/pinterest.png";
-import twitter from "../../assets/twitter.png";
-import yt from "../../assets/yt.png";
+import React from "react";
+import { FaFacebookF, FaTwitter, FaYoutube, FaPinterestP } from "react-icons/fa";
+import "bootstrap/dist/css/bootstrap.min.css";
 import FooterLink from "./FooterLink";
 
-export default function Footer() {
+
+const Footer = () => {
+  const columnLinks = [
+    ["About Us", "Our Pricing", "Our Gallery", "Appointment", "Privacy Policy"],
+    ["Orthology", "Neurology", "Dental Care", "Opthalmology", "Cardiology"],
+    ["About Us", "Our Pricing", "Our Gallery", "Appointment", "Privacy Policy"]
+  ];
+
   return (
-    <Box bgcolor="primary.secondary" pb={3} pt={6}>
-      <Container maxWidth="xl">
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={4.5}>
-            <Stack
-              alignItems="flex-start"
-              justifyContent="space-between"
-              height={1}
-            >
-              <Box src={logo} height={36} alt="Medify" component="img" mb={2} />
-              <Stack direction="row" spacing={1.5}>
-                <Box component="img" src={fb} height={36} />
-                <Box component="img" src={twitter} height={36} />
-                <Box component="img" src={yt} height={36} />
-                <Box component="img" src={pinterest} height={36} />
-              </Stack>
-            </Stack>
-          </Grid>
+    <footer className="text-white pt-5 pb-3" style={{
+      background:"#1B3C74"
+    }}>
+      <div className="container">
+        <div className="row">
+          {/* Logo & Social Icons */}
+          <div className="col-md-3 mb-4">
+            <h5 className="fw-bold mb-3">
+              <i className="bi bi-shield-fill-check me-2"></i> Medify
+            </h5>
+            <div className="d-flex gap-3">
+              <FaFacebookF />
+              <FaTwitter />
+              <FaYoutube />
+              <FaPinterestP />
+            </div>
+          </div>
 
-          <Grid item xs={12} md={2.5}>
-            <Stack spacing={2}>
-              <FooterLink>About Us</FooterLink>
-              <FooterLink>Our Pricing</FooterLink>
-              <FooterLink>Our Gallery</FooterLink>
-              <FooterLink>Appointment</FooterLink>
-              <FooterLink>Privacy Policy</FooterLink>
-            </Stack>
-          </Grid>
+          {/* Link Columns */}
+          <div className="col-md-9">
+            <div className="row">
+              {columnLinks.map((links, idx) => (
+                <div className="col-6 col-md-4 mb-3" key={idx}>
+                  <FooterLink links={links} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
 
-          <Grid item xs={12} md={2.5}>
-            <Stack spacing={2}>
-              <FooterLink>Orthology</FooterLink>
-              <FooterLink>Neurology</FooterLink>
-              <FooterLink>Dental Care</FooterLink>
-              <FooterLink>Opthalmology</FooterLink>
-              <FooterLink>Cardiology</FooterLink>
-            </Stack>
-          </Grid>
-
-          <Grid item xs={12} md={2.5}>
-            <Stack spacing={2}>
-              <FooterLink>About Us</FooterLink>
-              <FooterLink>Our Pricing</FooterLink>
-              <FooterLink>Our Gallery</FooterLink>
-              <FooterLink>Appointment</FooterLink>
-              <FooterLink>Privacy Policy</FooterLink>
-            </Stack>
-          </Grid>
-        </Grid>
-
-        <Typography
-          fontWeight={300}
-          color="#fff"
-          fontSize={14}
-          pt={3}
-          mt={5}
-          borderTop="1px solid rgba(255,255,255,0.1)"
-        >
+        <hr className="border-light" />
+        <div className="text-center small">
           Copyright ©2023 Surya Nursing Home.com. All Rights Reserved
-        </Typography>
-      </Container>
-    </Box>
+        </div>
+      </div>
+    </footer>
   );
-}
+};
+
+export default Footer;

@@ -1,33 +1,60 @@
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import img from '../../assets/home.webp'
-import { Box, Stack, Typography, Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "swiper/css";
+import "swiper/css/pagination";
+import "./HeroSlider.css";
 
-export default function HeroSlider() {
-    return (
-        <Swiper>
-            <SwiperSlide>
-                <Stack direction={{ xs: 'column', md: "row" }} spacing={6} alignItems="center" pt={2}>
-                    <Box>
-                        <Typography variant='h3' component='h1'>Skip the travel! Find Online</Typography>
-                        <Typography variant='h1' component='h1' mb={1}>Medical <span style={{ color: '#2AA7FF' }}>Centers</span></Typography>
-                        <Typography color="#5C6169" fontSize={{ md: 20 }} mb={3}>
-                            Connect instantly with a 24x7 specialist or choose to video visit a particular doctor.
-                        </Typography>
-                        <Link to='/search'>
-                            <Button variant='contained' size="large" disableElevation>
-                                Find Centers
-                            </Button>
-                        </Link>
-                    </Box>
-                    <Box
-                        component={'img'}
-                        src={img}
-                        width={{ xs: 1, md: "50%" }}
-                    />
-                </Stack>
-            </SwiperSlide>
-        </Swiper>
-    )
-}
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Autoplay } from "swiper/modules";
+
+// Images
+import group10 from "../../assets/Group 10.jpg";
+import group11 from "../../assets/Group 11.jpg";
+import group12 from "../../assets/Group 12.jpg";
+import group13 from "../../assets/Group 10.jpg";
+import group14 from "../../assets/Group 11.jpg";
+import group15 from "../../assets/Group 12.jpg";
+
+const HeroSlider = () => {
+  const slides = [group10, group11, group12, group13, group14, group15];
+
+  return (
+    <div className="container-fluid bg-white py-4" >
+      <Swiper
+        modules={[Pagination, Autoplay]}
+        slidesPerView={3}
+        loop={true}
+        autoplay={{ delay: 3000 }}
+        pagination={{ clickable: true }}
+        breakpoints={{
+          320: {
+            slidesPerView: 1,
+            spaceBetween: 10,
+          },
+          576: {
+            slidesPerView: 2,
+            spaceBetween: 15,
+          },
+          768: {
+            slidesPerView: 3,
+            spaceBetween: 20,
+          },
+        }}
+        className="mySwiper"
+      >
+        {slides.map((img, index) => (
+          <SwiperSlide key={index}>
+            <img
+              src={img}
+              alt={`Slide ${index + 1}`}
+              className="img-fluid rounded d-block mx-auto"
+              style={{ maxHeight: "400px", objectFit: "cover" }}
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div>
+  );
+};
+
+export default HeroSlider;

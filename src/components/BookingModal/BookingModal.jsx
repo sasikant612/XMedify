@@ -1,128 +1,104 @@
-import {
-  Modal,
-  Typography,
-  Box,
-  TextField,
-  Button,
-  Stack,
-} from "@mui/material";
-import { useState } from "react";
-import { format } from "date-fns";
+import React, { useState, useEffect } from "react";
+import { Modal, Button, Form } from "react-bootstrap";
 
-export default function BookingModal({
-  setOpen,
-  open,
-  bookingDetails,
-  showSuccessMessage,
-}) {
-  const [email, setEmail] = useState("");
+const BookingModal = ({ show, onHide, center }) => {
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
 
-  const handleBooking = (e) => {
-    e.preventDefault();
-    triggerEvent();
-
-    const bookings = localStorage.getItem("bookings") || "[]";
-
-    const oldBookings = JSON.parse(bookings);
-
-    localStorage.setItem(
-      "bookings",
-      JSON.stringify([
-        ...oldBookings,
-        { ...bookingDetails, bookingEmail: email },
-      ])
-    );
-    showSuccessMessage(true);
-    setEmail("");
-    setOpen(false);
-  };
-
-  const triggerEvent = () => {
-    // Ensure dataLayer is defined
-    window.dataLayer = window.dataLayer || [];
-
-    // Function to push the first_visit event to the dataLayer
-    function triggerFirstVisitEvent() {
-      window.dataLayer.push({
-        event: "first_visit",
-        eventDate: new Date().toISOString(), // Optional: track the exact time of the event
-      });
+  useEffect(() => {
+    if (show) {
+      const today = new Date().toISOString().split("T")[0];
+      setDate(today);
+      setTime("");
     }
+  }, [show]);
 
-    triggerFirstVisitEvent();
+  const handleBook = () => {
+  if (!center) {
+    alert("No hospital selected!");
+    return;
+  }
+  if (!date || !time) {
+    alert("Please select date and time");
+    return;
+  }
+
+  const booking = {
+    "Hospital Name": center["Hospital Name"] || center.name || "Unknown Hospital",
+    "Address": center.Address || center.address || "",
+    "City": center.City || center.city || "",
+    "State": center.State || center.state || "",
+    bookingDate: date,
+    bookingTime: time,
   };
 
-  const formatDate = (day) => {
-    if (day) {
-      const date = new Date(day);
-      return format(date, "E, d LLL");
-    } else {
-      return null;
-    }
-  };
+  const existing = JSON.parse(localStorage.getItem("bookings")) || [];
+  localStorage.setItem("bookings", JSON.stringify([...existing, booking]));
+
+  alert("Appointment Booked!");
+  onHide();
+};
+
+  const today = new Date().toISOString().split("T")[0];
+  const maxDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+    .toISOString()
+    .split("T")[0];
 
   return (
-    <Modal open={open} onClose={() => setOpen(false)}>
-      <Box
-        sx={{
-          width: "95%",
-          maxWidth: 600,
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          boxShadow: 24,
-          p: { xs: 3, md: 4 },
-          outline: 0,
-          bgcolor: "#fff",
-          borderRadius: 2,
-        }}
-      >
-        <Typography component="h3" variant="h3">
-          Confirm booking
-        </Typography>
-        <Typography fontSize={14} mb={3}>
-          <Box component="span">
-            Please enter your email to confirm booking for{" "}
-          </Box>
-          <Box component="span" fontWeight={600}>
-            {`${bookingDetails.bookingTime} on ${formatDate(
-              bookingDetails.bookingDate
-            )}`}
-          </Box>
-        </Typography>
-        <form onSubmit={handleBooking}>
-          <Stack alignItems="flex-start" spacing={2}>
-            <TextField
-              type="email"
-              label="Enter your email"
-              variant="outlined"
-              fullWidth
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+    <Modal show={show} onHide={onHide}>
+      <Modal.Header closeButton>
+        <Modal.Title>Book Appointment</Modal.Title>
+      </Modal.Header>
+
+      <Modal.Body>
+        <Form>
+          <Form.Group>
+            <Form.Label>Select Date</Form.Label>
+            <Form.Control
+              id="date-select"
+              type="date"
+              value={date}
+              min={today}
+              max={maxDate}
+              onChange={(e) => setDate(e.target.value)}
             />
-            <Stack direction="row" spacing={1}>
-              <Button
-                type="submit"
-                variant="contained"
-                size="large"
-                disableElevation
-              >
-                Confirm
-              </Button>
-              <Button
-                variant="outlined"
-                size="large"
-                disableElevation
-                onClick={() => setOpen(false)}
-              >
-                Cancel
-              </Button>
-            </Stack>
-          </Stack>
-        </form>
-      </Box>
+            {date === today && (
+              <p className="text-muted mb-3">
+                Today
+              </p>
+            )}
+          </Form.Group>
+
+          <Form.Group className="mt-3">
+            <Form.Label>Select Time</Form.Label>
+            <div className="time-of-day-labels">
+              <p className="text-muted mb-3">Morning</p>
+              <p className="text-muted mb-3">Noon</p>
+              <p className="text-muted mb-3">Afternoon</p>
+              <p className="text-muted mb-3">Evening</p>
+            </div>
+            <Form.Select
+              id="time-select"
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+            >
+              <option value="">Choose...</option>
+              <option value="10:00 AM">10:00 AM</option>
+              <option value="12:00 PM">12:00 PM</option>
+              <option value="03:00 PM">03:00 PM</option>
+              <option value="05:00 PM">05:00 PM</option>
+            </Form.Select>
+          </Form.Group>
+        </Form>
+      </Modal.Body>
+
+      <Modal.Footer>
+        <Button onClick={handleBook} disabled={!date || !time}>
+          Book
+        </Button>
+      </Modal.Footer>
     </Modal>
   );
-}
+};
+
+export default BookingModal;

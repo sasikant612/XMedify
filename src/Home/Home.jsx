@@ -1,58 +1,99 @@
-import { Container, Box, Stack } from "@mui/material";
-import HeroSlider from "../components/HeroSlider/HeroSlider";
-import SearchHospital from "../components/SearchHospital/SearchHospital";
-import FAQs from "../components/Sections/FAQs/FAQs";
-import OurFamilies from "../components/Sections/OurFamilies/OurFamilies";
-import Blogs from "../components/Sections/Blogs/Blogs";
-import PatientCaring from "../components/Sections/PatientCaring/PatientCaring";
-import Specialists from "../components/Sections/Specialists/Specialists";
-import Specialization from "../components/Sections/Specialization/Specialization";
-import Offers from "../components/Sections/Offers/Offers";
-import NavBar from "../components/NavBar/NavBar";
-import HeroServices from "../components/IconLayout/HeroServices";
+import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import heroImage from "../assets/hero_image.png";
+import SearchBar from "../components/SearchBar/SearchBar";
+import HeroSlider from "../components/HeroSlider/Heroslider";
 
-export default function Home() {
+// Importing images
+import doctorImg from "../assets/Doctor.jpg";
+import labImg from "../assets/Drugstore.jpg";
+import hospitalImg from "../assets/Hospital.jpg";
+import storeImg from "../assets/Capsule.jpg";
+import ambulanceImg from "../assets/Ambulance.jpg";
+
+const services = [
+  { img: doctorImg, label: "Doctors" },
+  { img: labImg, label: "Labs" },
+  { img: hospitalImg, label: "Hospitals", active: true },
+  { img: storeImg, label: "Medical Store" },
+  { img: ambulanceImg, label: "Ambulance" },
+];
+
+const Home = () => {
   return (
-    <Box>
-      <Box
-        sx={{
-          background:
-            "linear-gradient(#E7F0FF , rgba(232, 241, 255, 0.47) 90%, #fff 10%)",
+    <>
+      <div
+        className="container-fluid py-5"
+        style={{
+          background: "linear-gradient(135deg, #E7F0FF, #E8F1FF78)",
         }}
-        mb={4}
       >
-        <NavBar />
-        <Container maxWidth="xl">
-          <HeroSlider />
-          <Stack
-            p={{ xs: 2.5, md: 8 }}
-            mt={{ xs: -2, md: 0, lg: -6, xl: -10 }}
-            position="relative"
-            zIndex={99}
-            bgcolor="#fff"
-            borderRadius="15px"
-            spacing={10}
-            boxShadow="0 0 12px rgba(0,0,0,0.1)"
-          >
-            <SearchHospital />
-            <HeroServices />
-          </Stack>
-        </Container>
-      </Box>
+        <div className="container">
+          <div className="row align-items-right">
+            {/* Left side: Text content */}
+            <div className="col-md-6 mb-4 mb-md-0">
+              <h1 className="fw-bold mb-3" style={{ fontSize: "2.8rem" }}>
+                Skip the travel! <br />
+                Find Online <br />
+                Medical Centers
+              </h1>
+              <p className="mb-4" style={{ fontSize: "1.2rem", color: "#555" }}>
+                Connect instantly with a 24x7 specialist or choose to video
+                visit a particular doctor.
+              </p>
+              <button className="btn btn-primary px-4 py-2">Find Center</button>
+            </div>
 
-      <Offers />
+            {/* Right side: Image */}
+            <div className="col-md-6 text-center">
+              <img
+                src={heroImage}
+                alt="Medical Center"
+                className="img-fluid"
+                style={{ maxHeight: "400px", objectFit: "contain" }}
+              />
+            </div>
+          </div>
+        </div>
 
-      <Specialization />
+        {/* Services */}
+        {/* Services Section: Unified div with Search + Title + Services */}
+        <div className="container mt-5">
+          <div className="p-4 shadow rounded bg-white">
+            {/* 🔍 SearchBar is now grouped inside this services block */}
+            <SearchBar />
 
-      <Specialists />
+            {/* Title */}
+            <h5 className="text-center mt-5 mb-4 fw-semibold">
+              You may be looking for
+            </h5>
 
-      <PatientCaring />
-
-      <Blogs />
-
-      <OurFamilies />
-
-      <FAQs />
-    </Box>
+            {/* Services Icons */}
+            <div className="row justify-content-center g-4">
+              {services.map((item, idx) => (
+                <div key={idx} className="col-6 col-sm-4 col-md-2">
+                  <div
+                    className={`p-3 rounded text-center shadow-sm ${
+                      item.active ? "border-primary border-2 border" : "border"
+                    }`}
+                    style={{ cursor: "pointer", backgroundColor: "#F8FAFF" }}
+                  >
+                    <img
+                      src={item.img}
+                      alt={item.label}
+                      style={{ width: "40px", height: "40px" }}
+                    />
+                    <div className="mt-2 fw-medium">{item.label}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+      <HeroSlider />
+    </>
   );
-}
+};
+
+export default Home;

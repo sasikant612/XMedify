@@ -5,7 +5,7 @@ import Search from "./Search/Search";
 // import BookingPage from "./BookingPage/BookingPage";
 import Navbar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer/Footer";
-import MyBookings from "./MyBookings/Mybookings";
+import MyBookings from "./MyBookings/MyBookings";
 
 const AppRoutes = () => (
   <Router>
